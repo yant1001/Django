@@ -20,8 +20,12 @@ def clean(self):
 
     # user_id와 패스워드가 모두 존재한다면
     if user_id and password:
-        # user_id를 이용해 사용자 조회
-        user = User.objects.get(user_id=user_id)
+        # user_id가 없는 경우를 처리하기 위한 try~except
+        try:
+            user = User.objects.get(user_id=user_id)
+        except User.DoesNotExist:  # 조회된 내용이 없을 경우 발생된 예외를 처리
+            self.add_error('user_id', '아이디가 없습니다.')
+            return   # 추가적인 처리를 더 이상 하지 않기 위해 return
 
         if not check_password(password, user.password):
             # 비밀번호가 틀리면 에러 메시지 출력되도록 설정
