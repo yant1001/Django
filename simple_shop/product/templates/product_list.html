@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+<!--
+humanize 필터
+사용자가 서비스를 사용할 때 일반적으로 볼 수 있는 방식으로
+문자열을 필터링 해준다. (장고 템플릿에서 기본적으로 지원)
+매니저앱의 settings.py에 humanize 앱 등록 필수!
+-->
+
+{% load humanize %}
+{% block contents %}
+
+
+{% comment %} 
+모든 데이터 조회 결과가 object_list 내의 QuerySet 형식으로 템플릿에 넘어가는 경우
+{% for product in object_list %}
+{{ product.product_name }} / {{product.product_price}}
+{% endfor %} 
+{% endcomment %}
+
+
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table table-light">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">재고</th>
+                    <th scope="col">등록날짜</th>
+                </tr>
+            </thead>
+            <tbody class="text-dark">
+                <!--views.py에서 context_object_name 적용 -->
+                {% for product in product_list %}
+                    <tr>
+                        <td scope="row"> {{ product.id }}</td>
+                        <td scope="row"> {{ product.product_name }}</td>
+                        <td scope="row"> {{ product.product_price|intcomma }}원</td>
+                        <td scope="row"> {{ product.product_stock }}</td>
+                        <td scope="row"> {{ product.registered_date|date:'Y-m-d H:i' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

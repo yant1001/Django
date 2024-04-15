@@ -1,3 +1,22 @@
 from django.shortcuts import render
+from django.views.generic import ListView, FormView
+from .models import Product
+from .forms import ProductRegisterForm
 
-# Create your views here.
+# 장고의 대표적인 제네릭 뷰인 ListView
+#   단순히 리스팅할 모델의 클래스를 지정해주는 것만으로
+#   해당 모델에 들어있는 데이터를 템플릿에 리스팅할 수 있게 도와준다.
+class ProductList(ListView):
+    model = Product
+    template_name = 'product_list.html'
+    
+    # product_list.html에서 object_list로 for문을 돌린다.
+    #   => ListView에서 모델에 있는 모든 데이터 조회 결과는 object_list 내의 QuerySet 형식으로 템플릿에 넘어가게 되기 때문에 object_list를 for문으로 하나씩 객체 추출하여 표현
+    #   이때 object_list 변수를 템플릿에서 사용하지 않으려면 아래와 같이 context_object_name 활용
+
+    context_object_name = 'product_list'
+
+class ProductRegister(FormView):
+    form_class = ProductRegisterForm
+    template_name = 'product_reg.html'
+    success_url='/product/'

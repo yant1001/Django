@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block contents%}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>상품 등록</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        {{ error }}
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="post" action=".">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                {% if field.name == 'product_desc' %}
+                <textarea class="form-control" id="{{ field.id_for_label }}" name="{{ field.name }}"></textarea>
+                {% else %}
+                <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label }}" name="{{ field.name }}">
+                {% endif %}
+            </div>
+
+            {% if field.errors %}
+            <span style="color: red;">{{ field.errors }}</span>
+            {% endif %}
+
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">등록</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
