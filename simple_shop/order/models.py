@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Order(models.Model):
-    # 사용ㅈ가 어떤 상품을 어떻게 주문했는지를 관리하기 위해 User, Product 모델을 외부키로 참조
+    # 사용자가 어떤 상품을 어떻게 주문했는지를 관리하기 위해 User, Product 모델을 외부키로 참조
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, verbose_name='사용자')
     product = models.ForeignKey('product.Product', on_delete=models.CASCADE, verbose_name='상품')
     order_qty = models.IntegerField(verbose_name='수량')

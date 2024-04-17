@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+<!-- 상품 등록 외 다른 템플릿에서는 아래 스크립트가 필요없기 때문에 -->
+<!-- 해당 템플릿에만 스크립트를 불러올 수 있도록 base.html에 block 적용함-->
+{% block header %}
+<!-- 위지윅 WYSIWYG 적용 (문서 편집 기능) -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+<!-- 써머노트 텍스트 편집기로 사용할 엘리먼트 -->
+<script>
+    $(document).ready(() => {
+        $("#id_product_desc").summernote({
+            height: 250
+        });
+    });
+</script>
+
+{% endblock %}
+
 {% block contents%}
 <div class="row mt-5">
     <div class="col-12 text-center">
