@@ -26,7 +26,6 @@ class ProductRegister(FormView):
 
 class ProductDetail(DetailView):
     template_name = 'product_detail.html'
-
     # queryset 필드는 모델 조회에 의해 표시되는 뷰에는 어디든 사용 가능 (ex. DetailView, ListView 등)
     # DetailView의 queryset == 조회 대상이 될 데이터들의 집합
     #   현재 프로젝트에선 모든 데이터가 조회 대상이 되기 때문에 all() 사용
@@ -34,7 +33,7 @@ class ProductDetail(DetailView):
     queryset = Product.objects.all()
     context_object_name = 'product'
 
-    def get_context_data(self, **kwargs: Any):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['form'] = OrderForm(self.request)
