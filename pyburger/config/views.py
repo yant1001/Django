@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 # 장고에서 HTML 파일을 브라우저에 돌려주기 위해 사용하는 함수
 from django.shortcuts import render
+from burgers.models import Burger
 
 def main(request):
     # 첫번째 인수: request -> view 함수에 자동으로 전달되는 request 객체를 지정
@@ -9,4 +10,19 @@ def main(request):
     return render(request, 'main.html')
 
 def burger_list(request):
-    return render(request, 'burger_list.html')
+    burgers = Burger.objects.all()
+    
+    # print하면 브라우저가 아닌 콘솔창에 출력된다.
+    #   View는 Model 클래스를 사용해서 DB로부터 원하는 데이터를 가져오고, 그 데이터를 템플릿으로 전달한다.
+    #   Template은 View 함수가 전달해준 데이터를 사용해서 동적으로 HTML을 구성한다.
+    print('전체 햄버거 목록:', burgers)
+
+    # Template으로 가져온 데이터를 전달해줄 때는 파이썬의 dict 객체를 사용한다.
+    #   관용적으로 Template에 전달되는 사전 객체의 변수명은 context이다.
+    context = {
+        # burgers 키에 burgers 변수(queryset 객체, 위에서 all로 정의됨)를 전달한다. (왼쪽 burgers 키는 바뀔 수 있다)
+        'burgers': burgers,
+    }
+
+    # render의 세번째 인수는 Template에 전달해줄 dict 객체
+    return render(request, 'burger_list.html', context)

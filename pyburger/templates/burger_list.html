@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <h1>pyburger의 햄버거 목록입니다.</h1>    
+    <h1>pyburger의 햄버거 목록입니다.</h1>  
+    {% for burger in burgers %}
+        <!-- 태그 안에서는 줄바꿈을 하여도 HTML 페이지에 표시가 안된다. -->
+        <div>
+            {{ burger }}
+            (가격: {{ burger.price }}원, 
+            칼로리: {{ burger.calories }}kcal)
+        </div>
+    {% endfor %}
 </body>
 </html>

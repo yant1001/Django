@@ -47,7 +47,8 @@
      1. `python manage.py makemigrations <클래스가 속한 app_name>`
   3. 아래와 같이 마이그레이션 파일을 데이터베이스에 적용한다.
      1. `python manage.py migrate <클래스가 속한 app_name>`
-     2. 그냥 `python manage.py migrate`만 하게 되면, 장고에 내장된 기본 기능들이 마이그레이션 적용된다.
+     2. `migrate`는 위에서 실행한 마이그레이션을 적용하는 명령어이다.
+     3. 그냥 `python manage.py migrate`만 하게 되면, 장고에 내장된 기본 기능들이 마이그레이션 적용된다.
   4. SQLite에 테이블이 생성되고, Model에서 작성했던 필드 외에 장고에서 각 행을 식별할 수 있도록 자동으로 생성해주는 id 열도 함께 만들어진다.
   5. Model 클래스를 생성하는 경우 말고 변경하는 경우에도 같은 과정을 반복한다.
      1.  `python manage.py makemigrations <클래스가 속한 app_name>`
