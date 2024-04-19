@@ -26,3 +26,19 @@ def burger_list(request):
 
     # render의 세번째 인수는 Template에 전달해줄 dict 객체
     return render(request, 'burger_list.html', context)
+
+def burger_search(request):
+    # request.GET에서 keyword 키의 값을 가져와 출력한다.
+    # filter -> 조건과 일치하는 객체를 모두 돌려준다.
+    # name__contains=keyword -> name 속성이 keyword 변수의 값을 포함하는 경우
+    # name_exact=keyword or name=keyword -> name 속성이 정확이 keyword 변수의 값인 경우
+    # 아래는 주소표시줄로 keyword가 주어지지 않다라도 에러가 나지 않도록 하는 코드
+    keyword = request.GET.get('keyword')
+    if keyword is not None:
+        burgers = Burger.objects.filter(name__contains=keyword)
+    else:
+        burgers = Burger.objects.none()
+    context = {
+        'burgers': burgers,
+    }
+    return render(request, 'burger_search.html', context)

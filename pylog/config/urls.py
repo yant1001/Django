@@ -15,12 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from config.views import main, burger_list, burger_search
+from config.views import index
+from blog.views import post_list
 
 urlpatterns = [
-    # URLconf가 주문을 받는 직원이라면, path는 메뉴
     path('admin/', admin.site.urls),
-    path('', main),
-    path('burgers/', burger_list),
-    path('search/', burger_search),
+    path('', index),
+    path('posts/', post_list),
 ]
