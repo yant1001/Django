@@ -1,6 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+<head>
+    <!-- 정적파일을 불러올 때는 {% static '정적파일경로' %} 태그를 사용 -->
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
 <body>
-    <h1>pylog</h1>    
+    <div id='index'>
+        <h1><a href="/posts/">pylog</a></h1>
+        <small>Life is short, You need Python.</small>
+    </div>
 </body>
 </html>

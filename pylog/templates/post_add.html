@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+
+<!--
+HTML에서 사용자의 입력을 받는 요소: <form>으로 감싼다.
+    - 입력에 대한 제목: <label>
+    - 한 줄 짜리 텍스트 입력: <input type='text'>
+    - 여러 줄의 텍스트 입력: <textarea>
+    - 버튼: <button>
+-->
+
+<body>
+    <div id="navbar">
+        <span>글 작성</span>
+    </div>
+    <div id="post-add">
+        <form method="POST" enctype="multipart/form-data">
+        <h1>Post Add</h1>
+        <form method="POST">
+            <!-- csrf 토큰은 hidden 유형의 input으로 치환된다 -->
+            {% csrf_token %}
+            <div>
+                <label>제목</label>
+                <!-- name값은, 브라우저에 글을 작성했을때 주소표시줄에 이름으로 등장한다. 꼭 title, content가 아니어도 된다는 의미! -->
+                <!-- URL로 전달한 값은 Django View에서 사용할 수 있다. 다만 DB에 새로운 객체를 생성하기 위해 사용할 때는 일반적으로 데이터를 URL로 전달하지 않는다. (제약사항+보안이슈)-->
+                <!-- URL로 데이터를 전달하는 방식이 GET메서드를 사용한 전송(읽기, 조회) -->
+                <!-- URL을 통하지 않고 더 많은 데이터를 제약없이 보내는 방식이 POST메서드를 사용한 전송(작성, 변경)--> 
+                <!-- 다만 POST 방식을 사용하려면 CSRF 토큰을 입력해야 한다. -->
+                <input name="title" type="text">
+            </div>
+            <div>
+                <label>내용</label>
+                <textarea name="content" id="" cols="50" rows="10"></textarea>
+            </div>
+            <div>
+                <label>썸네일</label>
+                <input name="thumbnail" type="file">
+            </div>
+            <button type="submit" class="btn btn-primary">작성</button>
+        </form>
+    </div>
+</body>
+</html>

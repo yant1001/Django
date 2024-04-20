@@ -119,4 +119,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# .py와 .html을 제외한 모든 소스코드를 정적파일이라고 하며, 이 파일드은 만드는 프로젝트의 일부분으로 취급된다.
+#   아래 STATIC_URL은 장고에서 기본적으로 작성되어 제공된다.
 STATIC_URL = '/static/'
+#   아래 STATICFILES_DIRS는 직접 작성 부분
+#   BASE_DIR은 프로젝트 디렉터리인 pylog/까지의 경로를 의미
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# 정적파일의 또다른 종류로, 유저가 업로드하는 정적파일도 존재한다.
+# 소스코드에 포함되는 정적파일은 settings.py의 STATICFILES_DIRS에 저장될 경로를 지정하고 템플릿에서 {% static %} 태그를 사용해서 소스코드에 포함되는 파일의 경로만 지정하면 된다.
+# 하지만 유저가 업로드하는 정적파일은 좀 더 복잡한 설정을 거친다.
+#   소스코드에 포함되는 정적파일의 시작 => STATIC_
+#   유저가 업로드하는 정적파일의 시작 => MEDIA_
+
+# media 디렉토리는 필요시점에 장고가 자동 생성한다.
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

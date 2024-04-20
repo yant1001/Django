@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <!-- as_p 메서드는 가각의 필드들을 <p> 요소 내부에 생성한다. -->
+    <!-- p 요소 내부에 label과 input이 자동 생성된다. (해당 login 페이지 소스코드로 확인 가능)-->
+    <!-- input의 name 속성은 Form 클래스에서 정의한 필드명들이다. -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit'>로그인</button>
+    </form>
+</body>
+</html>
