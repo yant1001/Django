@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from users.forms import LoginForm, SignupForm
 
+from users.models import User
+
 def login_view(request):
     # 로그인 페이지에 접근하는 사용자가 이미 로그인되어 있는 경우
     if request.user.is_authenticated:
@@ -50,8 +52,36 @@ def logout_view(request):
     return redirect('/users/login/')
 
 def signup(request):
+    if request.method == "POST":
+        # Form이 문자열과 파일 데이터를 둘 다 가지고 있다면 Form 생성 시 data와 files 모두 전달해야 한다.
+        form = SignupForm(data=request.POST, files=request.FILES)
+        # is_valid()로 유효성 검증한 값이 True일 때, 입력받은 값들을 변수로 할당하는 단계
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password1 = form.cleaned_data["password1"]
+            password2 = form.cleaned_data["password2"]
+            profile_image = form.cleaned_data["profile_image"]
+            short_description = form.cleaned_data["short_description"]
+            
+            # Form에 에러가 없을 경우(True값), 곧바로 User를 생성하고 로그인 후 피드 페이지로 이동한다. 
+            user = User.objects.create_user(
+                username=username,
+                password=password1,
+                profile_image=profile_image,
+                short_description=short_description
+            )
+            login(request, user)
+            return redirect("/posts/feeds/")
+        # Form에 에러가 있다면, 에러를 포함한 Form을 사용해 회원가입 페이지로 이동
+        else:
+            context = {"form": form}
+            return render(request, "users/signup.html", context)
+
+    # GET 요청에는 빈 Form을 보여준다.
     # View에서 Template에 SignupForm을 전달하는 역할
     #   SignupForm 인스턴스를 생성, Template에 전달한다.
-    form = SignupForm()
-    context = {'form': form}
-    return render(request, 'users/signup.html', context)
+    else:
+        form = SignupForm()
+        context = {'form': form}
+        return render(request, 'users/signup.html', context)
+
