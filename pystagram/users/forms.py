@@ -43,3 +43,19 @@ class SignupForm(forms.Form):
         password2 = self.cleaned_data["password2"]
         if password1 != password2:
             self.add_error("password2", "비밀번와 비밀번호 확인란의 값이 다릅니다.")
+
+    def save(self):
+        username = self.cleaned_data["username"]
+        password1 = self.cleaned_data["password1"]
+        password2 = self.cleaned_data["password2"]
+        profile_image = self.cleaned_data["profile_image"]
+        short_description = self.cleaned_data["short_description"]
+        
+        # Form에 에러가 없을 경우(True값), 곧바로 User를 생성하고 로그인 후 피드 페이지로 이동한다. 
+        user = User.objects.create_user(
+            username=username,
+            password=password1,
+            profile_image=profile_image,
+            short_description=short_description
+        )
+        return user

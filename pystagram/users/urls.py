@@ -9,7 +9,7 @@ from users.views import login_view, logout_view, signup
 urlpatterns = [
     # Root URLconf에서 include 함수를 사용해 users의 urls.py 내용을 가져온다.
     # "users/login/" 경로: config/urls.py → users/urls.py → login_view 함수
-    path("login/", login_view),
-    path('logout/', logout_view),
-    path('signup/', signup),
+    path("login/", login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('signup/', signup, name='signup'),
 ]

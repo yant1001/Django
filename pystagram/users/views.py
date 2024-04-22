@@ -49,7 +49,7 @@ def logout_view(request):
     # 장고 기본 규칙에서 로그아웃은 GET, POST 관계없이 동작하지만,
     #   P0ST 요청에서만 동작하게 하고 싶다면 request.method에 따라 동작을 다르게 변형해 사용한다.
     logout(request)
-    return redirect('/users/login/')
+    return redirect('login/')
 
 def signup(request):
     if request.method == "POST":
@@ -57,31 +57,20 @@ def signup(request):
         form = SignupForm(data=request.POST, files=request.FILES)
         # is_valid()로 유효성 검증한 값이 True일 때, 입력받은 값들을 변수로 할당하는 단계
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            password1 = form.cleaned_data["password1"]
-            password2 = form.cleaned_data["password2"]
-            profile_image = form.cleaned_data["profile_image"]
-            short_description = form.cleaned_data["short_description"]
-            
-            # Form에 에러가 없을 경우(True값), 곧바로 User를 생성하고 로그인 후 피드 페이지로 이동한다. 
-            user = User.objects.create_user(
-                username=username,
-                password=password1,
-                profile_image=profile_image,
-                short_description=short_description
-            )
+            user = form.save()
             login(request, user)
             return redirect("/posts/feeds/")
-        # Form에 에러가 있다면, 에러를 포함한 Form을 사용해 회원가입 페이지로 이동
-        else:
-            context = {"form": form}
-            return render(request, "users/signup.html", context)
+        # Form에 에러가 있다면, 즉 위의 POST 요청이 유효하지 않다면, 아래의 context~ 부분으로 이동
 
     # GET 요청에는 빈 Form을 보여준다.
     # View에서 Template에 SignupForm을 전달하는 역할
     #   SignupForm 인스턴스를 생성, Template에 전달한다.
     else:
         form = SignupForm()
-        context = {'form': form}
-        return render(request, 'users/signup.html', context)
+
+    # context로 전달되는 form의 경우의 수
+    # 1. POST 요청에서 생성된 form이 유효하지 않은 경우 >> 에러를 포함한 form이 사용자에게 보여진다.
+    # 2. GET 요청으로 빈 form이 생성되는 경우 >> 빈 form이 사용자에게 보여진다.
+    context = {'form': form}
+    return render(request, 'users/signup.html', context)
 
