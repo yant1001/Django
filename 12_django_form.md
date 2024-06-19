@@ -54,3 +54,9 @@
 - `filter()`은 조건에 맞는 객체 여러개를 묶어 쿼리셋 형태로 반환한다.
 - 조건에 맞는 객체가 없을 시 에러가 아닌 빈 쿼리셋을 반환한다.
 - 쿼리셋이기 때문에 query 속성에 접근할 수 있다.
+
+# redirect
+- `return redirect` 할 때, 함수의 urls.py 앱 네임을 상속받지 않고 루트 주소에서 바로 다른 주소로 이동하고자 하는 경우에는 슬래시`/`를 앞에 넣어주어야 한다.
+  - `return redirect(f'/profiles/{profile_id}/profile-edit-2/')` (O)
+  - `return redirect(f'profiles/{profile_id}/profile-edit-2/')` (X)
+    - 이 경우에는 앞선 URL이 삭제되지 않고 바로 뒤에 새로 지정한 URL이 연결되어 버린다.
